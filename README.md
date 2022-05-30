@@ -5,7 +5,7 @@
 ### How to run project
 
 * Application works on - http://localhost:8080/
-* To start the project: Open CMD, select folder of this project and type - mvn spring-boot:run ??????????
+* To start the project: Open CMD, select folder of this project and type -  .\mvnw spring-boot:run
 
 #### /myperfectapp/holidaycount/{countryCode}/{year} - get endpoint which accepts two parameters (countryCode, year) and returns holidays count. Example:
 ```

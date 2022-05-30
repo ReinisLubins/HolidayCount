@@ -12,8 +12,8 @@ public class HolidayController {
         this.holidayService = holidayService;
     }
 
-    @GetMapping("/myperfectapp/holidaycount/{countryCode}/{year}")
-    public Integer holidayCount(@PathVariable String countryCode, @PathVariable String year) {
-        return holidayService.getHolidaysCount(year, countryCode);
+    @GetMapping("/myperfectapp/holidaycount/{countryCode}/{yearInterval}")
+    public Integer holidayCount(@PathVariable String countryCode, @PathVariable String yearInterval) {
+        return holidayService.getHolidaysCount(yearInterval, countryCode);
     }
 }

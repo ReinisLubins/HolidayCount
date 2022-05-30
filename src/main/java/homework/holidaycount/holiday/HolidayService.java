@@ -1,52 +1,54 @@
 package homework.holidaycount.holiday;
 
-import homework.holidaycount.holiday.response.HolidayResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class HolidayService {
-
-    private final RestTemplate restTemplate;
     Logger logger = LoggerFactory.getLogger(HolidayService.class);
 
-    public HolidayService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    private final HolidayRestService holidayRestService;
+
+    public HolidayService(HolidayRestService holidayRestService) {
+        this.holidayRestService = holidayRestService;
     }
 
     public Integer getHolidaysCount(String year, String countryCode) {
-        if (year.contains("-")) {
-            int holidaysCount = 0;
+        validRequest(year, countryCode);
 
-            String[] yearInterval = year.split("-");
-            int firstYear = Integer.parseInt(yearInterval[0]);
-            int lastYear = Integer.parseInt(yearInterval[1]);
+        String[] yearInterval = year.split("-");
+        int firstYear = Integer.parseInt(yearInterval[0]);
+        int lastYear = Integer.parseInt(yearInterval[1]);
 
-            for (int i = firstYear; i <= lastYear; i++) {
-                holidaysCount += getHolidays(String.valueOf(i), countryCode);
-            }
+        validateYears(firstYear, lastYear);
 
-            return holidaysCount;
-        } else {
-            return getHolidays(year, countryCode);
+        int holidaysCount = 0;
+
+        for (int i = firstYear; i <= lastYear; i++) {
+            holidaysCount += holidayRestService.getHolidays(i, countryCode);
+        }
+
+        return holidaysCount;
+    }
+
+    private void validRequest(String yearInterval, String countryCode) {
+        if (!yearInterval.matches("\\d{4}-\\d{4}")) {
+            logger.error("Wrong year format was received: " + yearInterval);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong year format!");
+        }
+
+        if (!countryCode.matches("[a-zA-Z]{2}")) {
+            logger.error("Wrong countryCode format was received: " + countryCode);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong countryCode format!");
         }
     }
 
-    private Integer getHolidays(String year, String countryCode) {
-        String url = "https://date.nager.at/api/v3/PublicHolidays/" + year + "/" + countryCode;
-        HolidayResponse[] holidays = new HolidayResponse[0];
-        try {
-            ResponseEntity<HolidayResponse[]> response = restTemplate.getForEntity(url, HolidayResponse[].class);
-            if (response.getBody() != null) {
-                holidays = response.getBody();
-            }
-        } catch (Exception e) {
-            logger.error("Could not retrieve holidays", e);
+    private void validateYears(int from, int to) {
+        if (from > to) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong year interval!");
         }
-
-        return holidays.length;
     }
 }
