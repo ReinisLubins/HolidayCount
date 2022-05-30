@@ -1,19 +1,29 @@
-# Getting Started
+# Holiday Count Application
 
-### Reference Documentation
+### This is spring web application is for counting holidays in given year or year interval
 
-For further reference, please consider the following sections:
+### How to run project
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.0/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.0/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.0/reference/htmlsingle/#boot-features-developing-web-applications)
+* Application works on - http://localhost:8080/
+* To start the project: Open CMD, select folder of this project and type - mvn spring-boot:run ??????????
 
-### Guides
+#### /myperfectapp/holidaycount/{countryCode}/{year} - get endpoint which accepts two parameters (countryCode, year) and returns holidays count. Example:
+```
+Endpoint - http://localhost:8080/myperfectapp/holidaycount/LV/1990-1995
+Return value (Holidays count) - 84
+```
+### Additional features
 
-The following guides illustrate how to use some features concretely:
+* Swagger console - http://localhost:8080/swagger-ui/index.html#/ Dependency:
+```
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.6.8</version>
+</dependency>
+```
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
+### Possible improvements
+
+* Creating additional unit tests
 

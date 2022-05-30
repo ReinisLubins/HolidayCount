@@ -37,7 +37,7 @@ public class HolidayService {
 
     private Integer getHolidays(String year, String countryCode) {
         String url = "https://date.nager.at/api/v3/PublicHolidays/" + year + "/" + countryCode;
-        HolidayResponse[] holidays = null;
+        HolidayResponse[] holidays = new HolidayResponse[0];
         try {
             ResponseEntity<HolidayResponse[]> response = restTemplate.getForEntity(url, HolidayResponse[].class);
             if (response.getBody() != null) {
