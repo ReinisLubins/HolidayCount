@@ -9,5 +9,4 @@ class HolidayCountApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

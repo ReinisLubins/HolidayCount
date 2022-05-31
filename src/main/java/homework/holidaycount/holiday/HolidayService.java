@@ -16,12 +16,12 @@ public class HolidayService {
         this.holidayRestService = holidayRestService;
     }
 
-    public Integer getHolidaysCount(String year, String countryCode) {
-        validRequest(year, countryCode);
+    public Integer getHolidaysCount(String yearInterval, String countryCode) {
+        validRequest(yearInterval, countryCode);
 
-        String[] yearInterval = year.split("-");
-        int firstYear = Integer.parseInt(yearInterval[0]);
-        int lastYear = Integer.parseInt(yearInterval[1]);
+        String[] years = yearInterval.split("-");
+        int firstYear = Integer.parseInt(years[0]);
+        int lastYear = Integer.parseInt(years[1]);
 
         validateYears(firstYear, lastYear);
 
