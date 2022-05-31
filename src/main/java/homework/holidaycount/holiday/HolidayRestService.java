@@ -3,9 +3,11 @@ package homework.holidaycount.holiday;
 import homework.holidaycount.holiday.response.HolidayResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class HolidayRestService {
@@ -26,6 +28,7 @@ public class HolidayRestService {
             }
         } catch (Exception e) {
             logger.error("Could not retrieve holidays", e);
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE);
         }
 
         return holidays.length;

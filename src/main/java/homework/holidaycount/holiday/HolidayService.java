@@ -17,7 +17,7 @@ public class HolidayService {
     }
 
     public Integer getHolidaysCount(String yearInterval, String countryCode) {
-        validRequest(yearInterval, countryCode);
+        validateRequest(yearInterval, countryCode);
 
         String[] years = yearInterval.split("-");
         int firstYear = Integer.parseInt(years[0]);
@@ -34,7 +34,7 @@ public class HolidayService {
         return holidaysCount;
     }
 
-    private void validRequest(String yearInterval, String countryCode) {
+    private void validateRequest(String yearInterval, String countryCode) {
         if (!yearInterval.matches("\\d{4}-\\d{4}")) {
             logger.error("Wrong year format was received: " + yearInterval);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong year format!");
